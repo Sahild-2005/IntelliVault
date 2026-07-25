@@ -1,14 +1,35 @@
-import { HardDrive } from "lucide-react";
+import { HardDrive, CheckCircle2 } from "lucide-react";
 import { Progress } from "../ui/progress";
 
-function StorageCard() {
-  const usedStorage = 65;
+function StorageCard({ storage = 0 }) {
+  const STORAGE_LIMIT = 1024 * 1024 * 1024; // 1 GB
+
+  const storagePercentage = Math.min(
+    (storage / STORAGE_LIMIT) * 100,
+    100
+  );
+
+  const formatStorage = (bytes) => {
+    if (bytes < 1024) return `${bytes} B`;
+
+    if (bytes < 1024 * 1024)
+      return `${(bytes / 1024).toFixed(1)} KB`;
+
+    if (bytes < 1024 * 1024 * 1024)
+      return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+
+    return `${(bytes / (1024 * 1024 * 1024)).toFixed(2)} GB`;
+  };
 
   return (
-    <div className="rounded-2xl border bg-white p-6 shadow-sm">
-      <div className="mb-5 flex items-center gap-3">
+    <div className="rounded-2xl border bg-white p-6 shadow-sm transition-all duration-300 hover:shadow-lg">
+      {/* Header */}
+      <div className="mb-6 flex items-center gap-3">
         <div className="rounded-xl bg-green-100 p-3">
-          <HardDrive className="text-green-600" size={24} />
+          <HardDrive
+            className="text-green-600"
+            size={24}
+          />
         </div>
 
         <div>
@@ -16,17 +37,47 @@ function StorageCard() {
             Storage Usage
           </h2>
 
-          <p className="text-gray-500">
-            6.5 GB of 10 GB used
+          <p className="text-sm text-gray-500">
+            {formatStorage(storage)} of 1 GB used
           </p>
         </div>
       </div>
 
-      <Progress value={usedStorage} className="h-3" />
+      {/* Progress */}
+      <Progress
+        value={storagePercentage}
+        className="h-3"
+      />
 
       <div className="mt-3 flex justify-between text-sm text-gray-500">
-        <span>Used</span>
-        <span>{usedStorage}%</span>
+        <span>Used Space</span>
+
+        <span>
+          {storagePercentage.toFixed(2)}%
+        </span>
+      </div>
+
+      {/* Bottom Info */}
+      <div className="mt-6 rounded-xl bg-gray-50 p-4">
+
+        <div className="mb-3 flex items-center justify-between">
+          <span className="text-gray-600">
+            Available Storage
+          </span>
+
+          <span className="font-semibold">
+            {formatStorage(STORAGE_LIMIT - storage)}
+          </span>
+        </div>
+
+        <div className="flex items-center gap-2 text-green-600">
+          <CheckCircle2 size={18} />
+
+          <span className="text-sm font-medium">
+            Cloud Storage Active
+          </span>
+        </div>
+
       </div>
     </div>
   );

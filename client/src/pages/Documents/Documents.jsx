@@ -8,12 +8,14 @@ import {
   getDocuments,
   deleteDocument,
   renameDocument,
+  analyzeDocument,
 } from "../../services/documentService";
 
 function Documents() {
   const [documents, setDocuments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const [analyzingId, setAnalyzingId] = useState(null);
 
   useEffect(() => {
     fetchDocuments();
@@ -31,6 +33,9 @@ function Documents() {
     }
   };
 
+  // ===========================
+  // Delete
+  // ===========================
   const handleDelete = async (id) => {
     const confirmed = window.confirm(
       "Are you sure you want to delete this document?"
@@ -41,7 +46,6 @@ function Documents() {
     try {
       const data = await deleteDocument(id);
 
-      // Remove deleted document instantly
       setDocuments((prev) =>
         prev.filter((doc) => doc._id !== id)
       );
@@ -52,11 +56,14 @@ function Documents() {
 
       toast.error(
         error.response?.data?.message ||
-        "Delete failed"
+          "Delete failed"
       );
     }
   };
 
+  // ===========================
+  // Rename
+  // ===========================
   const handleRename = async (id, currentName) => {
     const newName = window.prompt(
       "Enter new document name:",
@@ -84,19 +91,51 @@ function Documents() {
 
       toast.error(
         error.response?.data?.message ||
-        "Rename failed"
+          "Rename failed"
       );
     }
   };
 
-  // Live Search
+  // ===========================
+  // Analyze with AI
+  // ===========================
+  const handleAnalyze = async (id) => {
+    try {
+      setAnalyzingId(id);
+
+      const data = await analyzeDocument(id);
+
+      setDocuments((prev) =>
+        prev.map((doc) =>
+          doc._id === id ? data.document : doc
+        )
+      );
+
+      toast.success("AI Analysis Completed!");
+    } catch (error) {
+      console.error(error);
+
+      toast.error(
+        error.response?.data?.message ||
+          "AI Analysis Failed"
+      );
+    } finally {
+      setAnalyzingId(null);
+    }
+  };
+
+  // ===========================
+  // Search
+  // ===========================
   const filteredDocuments = documents.filter((doc) =>
-    doc.name.toLowerCase().includes(searchTerm.toLowerCase())
+    doc.name
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase())
   );
 
   return (
     <DashboardLayout>
-      {/* Page Heading */}
+      {/* Heading */}
       <div className="mb-8">
         <h1 className="text-4xl font-bold">
           My Documents
@@ -107,13 +146,15 @@ function Documents() {
         </p>
       </div>
 
-      {/* Search Bar */}
+      {/* Search */}
       <div className="mb-8">
         <input
           type="text"
           placeholder="🔍 Search documents..."
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={(e) =>
+            setSearchTerm(e.target.value)
+          }
           className="w-full rounded-xl border bg-white px-4 py-3 outline-none transition focus:border-blue-500"
         />
       </div>
@@ -134,6 +175,10 @@ function Documents() {
                 document={doc}
                 onDelete={handleDelete}
                 onRename={handleRename}
+                onAnalyze={handleAnalyze}
+                isAnalyzing={
+                  analyzingId === doc._id
+                }
               />
             ))
           ) : (

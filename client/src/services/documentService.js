@@ -33,10 +33,7 @@ export const getDocuments = async () => {
  * Delete Document
  */
 export const deleteDocument = async (id) => {
-  const response = await api.delete(
-    `/documents/${id}`
-  );
-
+  const response = await api.delete(`/documents/${id}`);
   return response.data;
 };
 
@@ -49,5 +46,21 @@ export const renameDocument = async (id, name) => {
     { name }
   );
 
+  return response.data;
+};
+
+/**
+ * Analyze Document with AI
+ */
+export const analyzeDocument = async (id) => {
+  const response = await api.post(
+    `/documents/${id}/analyze`
+  );
+
+  return response.data;
+};
+
+export const getDocumentById = async (id) => {
+  const response = await api.get(`/documents/${id}`);
   return response.data;
 };

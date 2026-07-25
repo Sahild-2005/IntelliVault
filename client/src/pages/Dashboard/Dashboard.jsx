@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import DashboardLayout from "../../layouts/DashboardLayout";
 
 import StatsCards from "../../components/dashboard/StatsCards";
@@ -7,12 +9,47 @@ import AIAssistantCard from "../../components/dashboard/AIAssistantCard";
 import StorageCard from "../../components/dashboard/StorageCard";
 import RecentActivity from "../../components/dashboard/RecentActivity";
 
+import { getDashboardStats } from "../../services/dashboardService";
+
 function Dashboard() {
+  const [stats, setStats] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchDashboard();
+  }, []);
+
+  const fetchDashboard = async () => {
+    try {
+      const data = await getDashboardStats();
+      setStats(data.stats);
+    } catch (error) {
+      console.error("Dashboard Error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <DashboardLayout>
+        <div className="flex h-[70vh] items-center justify-center">
+          <div className="text-center">
+            <div className="mx-auto mb-4 h-10 w-10 animate-spin rounded-full border-4 border-blue-600 border-t-transparent"></div>
+            <p className="text-lg font-medium text-gray-600">
+              Loading Dashboard...
+            </p>
+          </div>
+        </div>
+      </DashboardLayout>
+    );
+  }
+
   return (
     <DashboardLayout>
-      {/* Page Heading */}
+      {/* Welcome Section */}
       <div className="mb-8">
-        <h1 className="text-4xl font-bold">
+        <h1 className="text-4xl font-bold text-gray-900">
           Welcome Back 👋
         </h1>
 
@@ -22,12 +59,14 @@ function Dashboard() {
       </div>
 
       {/* Stats Cards */}
-      <StatsCards />
+      <StatsCards stats={stats} />
 
       {/* Recent Documents + Quick Actions */}
       <div className="mt-8 grid grid-cols-1 gap-6 xl:grid-cols-3">
         <div className="xl:col-span-2">
-          <RecentDocuments />
+          <RecentDocuments
+            documents={stats?.recentDocuments || []}
+          />
         </div>
 
         <QuickActions />
@@ -35,8 +74,11 @@ function Dashboard() {
 
       {/* AI Assistant + Storage */}
       <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <AIAssistantCard />
-        <StorageCard />
+        <AIAssistantCard stats={stats} />
+
+        <StorageCard
+          storage={stats?.storageUsed || 0}
+        />
       </div>
 
       {/* Recent Activity */}

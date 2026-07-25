@@ -43,14 +43,48 @@ const documentSchema = new mongoose.Schema(
       default: "My Documents",
     },
 
+    // ===========================
+    // AI DATA
+    // ===========================
+
+    extractedText: {
+      type: String,
+      default: "",
+    },
+
     aiSummary: {
       type: String,
       default: "",
     },
 
-    extractedText: {
+    aiTags: {
+      type: [String],
+      default: [],
+    },
+
+    documentType: {
       type: String,
       default: "",
+    },
+
+    suggestedTitle: {
+      type: String,
+      default: "",
+    },
+
+    isAnalyzed: {
+      type: Boolean,
+      default: false,
+    },
+
+    ocrProcessed: {
+      type: Boolean,
+      default: false,
+    },
+
+    summaryGenerated: {
+      type: Boolean,
+      default: false,
     },
   },
   {
@@ -58,4 +92,4 @@ const documentSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("Document", documentSchema);
+export default mongoose.model("Document", documentSchema);  
