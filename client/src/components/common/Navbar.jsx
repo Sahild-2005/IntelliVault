@@ -1,10 +1,12 @@
-import { LogOut } from "lucide-react";
+import { LogOut, Moon, Sun } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { useTheme } from "../../context/ThemeContext";
 import toast from "react-hot-toast";
 
 function Navbar() {
   const { user, logout } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -14,7 +16,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="flex items-center justify-between border-b bg-white px-8 py-4 shadow-sm">
+    <nav className="flex items-center justify-between border-b bg-background px-8 py-4 shadow-sm transition-colors">
 
       <h1 className="text-2xl font-bold text-blue-600">
         IntelliVault
@@ -22,9 +24,21 @@ function Navbar() {
 
       <div className="flex items-center gap-4">
 
-        <span className="font-medium">
+        <span className="font-medium text-foreground">
           {user?.fullName}
         </span>
+
+        <button
+          onClick={toggleTheme}
+          className="rounded-lg p-2 hover:bg-muted transition"
+          title="Toggle Theme"
+        >
+          {theme === "light" ? (
+            <Moon size={20} />
+          ) : (
+            <Sun size={20} className="text-yellow-500" />
+          )}
+        </button>
 
         <button
           onClick={handleLogout}

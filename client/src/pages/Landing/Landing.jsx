@@ -9,10 +9,21 @@ function Landing() {
   return (
     <>
       <Navbar />
+
       <Hero />
-      <Features />
-      <HowItWorks />
-      <CTA />
+
+      <section id="features">
+        <Features />
+      </section>
+
+      <section id="how-it-works">
+        <HowItWorks />
+      </section>
+
+      <section id="about">
+        <CTA />
+      </section>
+
       <Footer />
     </>
   );

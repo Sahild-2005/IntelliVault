@@ -3,10 +3,13 @@ import api from "./api";
 /**
  * Upload Document
  */
-export const uploadDocument = async (file) => {
+export const uploadDocument = async (file, folder = "") => {
   const formData = new FormData();
 
   formData.append("document", file);
+
+  // Send selected folder (or empty if no folder selected)
+  formData.append("folder", folder);
 
   const response = await api.post(
     "/documents/upload",

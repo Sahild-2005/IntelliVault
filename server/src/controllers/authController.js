@@ -2,6 +2,10 @@ import generateToken from "../utils/generateToken.js";
 import bcrypt from "bcryptjs";
 import User from "../models/User.js";
 
+// ======================================
+// Register User
+// ======================================
+
 export const registerUser = async (req, res) => {
   try {
     const { fullName, email, password } = req.body;
@@ -14,7 +18,7 @@ export const registerUser = async (req, res) => {
       });
     }
 
-    // Check if user exists
+    // Check if user already exists
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
@@ -43,19 +47,26 @@ export const registerUser = async (req, res) => {
         email: user.email,
       },
     });
-
   } catch (error) {
-    console.error(error);
+    console.error("Register Error:", error);
 
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Internal Server Error",
     });
   }
 };
 
+// ======================================
+// Login User
+// ======================================
+
 export const loginUser = async (req, res) => {
   try {
+    console.log("================================");
+    console.log("Login Request Received");
+    console.log("Request Body:", req.body);
+
     const { email, password } = req.body;
 
     // Validation
@@ -66,8 +77,12 @@ export const loginUser = async (req, res) => {
       });
     }
 
+    console.log("Searching for user:", email);
+
     // Find user
     const user = await User.findOne({ email });
+
+    console.log("User Found:", user);
 
     if (!user) {
       return res.status(401).json({
@@ -79,6 +94,8 @@ export const loginUser = async (req, res) => {
     // Compare password
     const isMatch = await bcrypt.compare(password, user.password);
 
+    console.log("Password Match:", isMatch);
+
     if (!isMatch) {
       return res.status(401).json({
         success: false,
@@ -88,6 +105,8 @@ export const loginUser = async (req, res) => {
 
     // Generate JWT
     const token = generateToken(user._id);
+
+    console.log("Login Successful");
 
     return res.status(200).json({
       success: true,
@@ -99,15 +118,13 @@ export const loginUser = async (req, res) => {
         email: user.email,
       },
     });
-
   } catch (error) {
-  console.error("Login Error:");
-  console.error(error);
+    console.error("========== LOGIN ERROR ==========");
+    console.error(error);
 
-  return res.status(500).json({
-    success: false,
-    message: error.message,
-    stack: error.stack,
-  });
-}
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
 };

@@ -36,7 +36,8 @@ function Dashboard() {
         <div className="flex h-[70vh] items-center justify-center">
           <div className="text-center">
             <div className="mx-auto mb-4 h-10 w-10 animate-spin rounded-full border-4 border-blue-600 border-t-transparent"></div>
-            <p className="text-lg font-medium text-gray-600">
+
+            <p className="text-lg font-medium text-muted-foreground">
               Loading Dashboard...
             </p>
           </div>
@@ -47,18 +48,18 @@ function Dashboard() {
 
   return (
     <DashboardLayout>
-      {/* Welcome Section */}
+      {/* Welcome */}
       <div className="mb-8">
-        <h1 className="text-4xl font-bold text-gray-900">
+        <h1 className="text-4xl font-bold text-foreground">
           Welcome Back 👋
         </h1>
 
-        <p className="mt-2 text-gray-500">
+        <p className="mt-2 text-muted-foreground">
           Here's an overview of your IntelliVault workspace.
         </p>
       </div>
 
-      {/* Stats Cards */}
+      {/* Stats */}
       <StatsCards stats={stats} />
 
       {/* Recent Documents + Quick Actions */}
@@ -72,7 +73,7 @@ function Dashboard() {
         <QuickActions />
       </div>
 
-      {/* AI Assistant + Storage */}
+      {/* AI + Storage */}
       <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
         <AIAssistantCard stats={stats} />
 
@@ -81,7 +82,7 @@ function Dashboard() {
         />
       </div>
 
-      {/* Recent Activity */}
+      {/* Activity */}
       <div className="mt-8">
         <RecentActivity />
       </div>

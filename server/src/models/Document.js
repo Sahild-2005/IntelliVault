@@ -39,9 +39,10 @@ const documentSchema = new mongoose.Schema(
     },
 
     folder: {
-      type: String,
-      default: "My Documents",
-    },
+  type: mongoose.Schema.Types.ObjectId,
+  ref: "Folder",
+  default: null,
+},
 
     // ===========================
     // AI DATA
@@ -86,6 +87,24 @@ const documentSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    // ===========================
+// Sharing
+// ===========================
+
+isShared: {
+  type: Boolean,
+  default: false,
+},
+
+shareToken: {
+  type: String,
+  default: "",
+},
+
+shareExpiry: {
+  type: Date,
+  default: null,
+},
   },
   {
     timestamps: true,

@@ -1,79 +1,102 @@
-import { Menu } from "lucide-react";
+import { Menu, Moon, Sun } from "lucide-react";
+import { Link } from "react-router-dom";
+
 import { Button } from "@/components/ui/button";
 import Logo from "@/components/common/Logo";
 import Container from "@/components/common/Container";
+import { useTheme } from "../../context/ThemeContext";
 
 function Navbar() {
-  return (
-    <header className="sticky top-0 z-50 border-b border-slate-200/60 bg-white/80 backdrop-blur-xl">
-      <Container>
+  const { theme, toggleTheme } = useTheme();
 
+  return (
+    <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-xl transition-colors duration-300">
+      <Container>
         <div className="flex h-20 items-center justify-between">
 
           {/* Logo */}
-
           <Logo />
 
           {/* Desktop Navigation */}
-
           <nav className="hidden items-center gap-8 md:flex">
-
             <a
-              href="#"
-              className="text-slate-600 transition hover:text-blue-600"
+              href="#features"
+              className="text-muted-foreground transition hover:text-blue-600"
             >
               Features
             </a>
 
             <a
-              href="#"
-              className="text-slate-600 transition hover:text-blue-600"
+              href="#how-it-works"
+              className="text-muted-foreground transition hover:text-blue-600"
             >
-              Pricing
+              How It Works
             </a>
 
             <a
-              href="#"
-              className="text-slate-600 transition hover:text-blue-600"
-            >
-              Docs
-            </a>
-
-            <a
-              href="#"
-              className="text-slate-600 transition hover:text-blue-600"
+              href="#about"
+              className="text-muted-foreground transition hover:text-blue-600"
             >
               About
             </a>
-
           </nav>
 
-          {/* Buttons */}
-
+          {/* Right Side */}
           <div className="hidden items-center gap-3 md:flex">
 
-            <Button variant="ghost">
-              Login
+            {/* Dark Mode Toggle */}
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={toggleTheme}
+              className="rounded-xl"
+            >
+              {theme === "light" ? (
+                <Moon className="h-5 w-5" />
+              ) : (
+                <Sun className="h-5 w-5 text-yellow-500" />
+              )}
             </Button>
 
-            <Button>
-              Get Started
-            </Button>
+            <Link to="/login">
+              <Button variant="ghost">
+                Login
+              </Button>
+            </Link>
+
+            <Link to="/register">
+              <Button>
+                Get Started
+              </Button>
+            </Link>
 
           </div>
 
           {/* Mobile Menu */}
+          <div className="flex items-center gap-2 md:hidden">
 
-          <Button
-            variant="ghost"
-            size="icon"
-            className="md:hidden"
-          >
-            <Menu className="h-5 w-5" />
-          </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={toggleTheme}
+            >
+              {theme === "light" ? (
+                <Moon className="h-5 w-5" />
+              ) : (
+                <Sun className="h-5 w-5 text-yellow-500" />
+              )}
+            </Button>
+
+            <Button
+              variant="ghost"
+              size="icon"
+            >
+              <Menu className="h-5 w-5" />
+            </Button>
+
+          </div>
 
         </div>
-
       </Container>
     </header>
   );

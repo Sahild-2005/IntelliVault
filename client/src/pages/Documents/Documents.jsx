@@ -3,6 +3,9 @@ import toast from "react-hot-toast";
 
 import DashboardLayout from "../../layouts/DashboardLayout";
 import DocumentCard from "../../components/documents/DocumentCard";
+import { useFolders } from "../../context/FolderContext";
+import ShareDocumentModal from "../../components/documents/ShareDocumentModal";
+
 
 import {
   getDocuments,
@@ -16,6 +19,9 @@ function Documents() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [analyzingId, setAnalyzingId] = useState(null);
+  const [shareModalOpen, setShareModalOpen] = useState(false);
+const [selectedDocument, setSelectedDocument] = useState(null);
+  const { selectedFolder } = useFolders();
 
   useEffect(() => {
     fetchDocuments();
@@ -123,83 +129,114 @@ function Documents() {
       setAnalyzingId(null);
     }
   };
+  // ===========================
+// Share
+// ===========================
+const handleShare = (document) => {
+  setSelectedDocument(document);
+  setShareModalOpen(true);
+};
 
   // ===========================
   // Search
   // ===========================
-  const filteredDocuments = documents.filter((doc) =>
-    doc.name
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase())
-  );
+const filteredDocuments = documents.filter((doc) => {
+  // Folder filter
+  const matchesFolder =
+    !selectedFolder ||
+    doc.folder?._id === selectedFolder;
 
-  return (
-    <DashboardLayout>
-      {/* Heading */}
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold">
-          My Documents
-        </h1>
+  // Search filter
+  const matchesSearch = doc.name
+    .toLowerCase()
+    .includes(searchTerm.toLowerCase());
 
-        <p className="mt-2 text-gray-500">
-          Manage all your uploaded documents securely.
+  return matchesFolder && matchesSearch;
+});
+
+ return (
+  <DashboardLayout>
+    {/* Heading */}
+    <div className="mb-8">
+      <h1 className="text-4xl font-bold text-foreground">
+        My Documents
+      </h1>
+
+      <p className="mt-2 text-muted-foreground">
+        Manage all your uploaded documents securely.
+      </p>
+    </div>
+
+    {/* Search */}
+    <div className="relative mb-8">
+      <input
+        type="text"
+        placeholder="🔍 Search documents..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="w-full rounded-2xl border border-border bg-card px-5 py-3 text-foreground placeholder:text-muted-foreground shadow-sm transition-all duration-300 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+      />
+    </div>
+
+    {/* Loading */}
+    {loading ? (
+      <div className="rounded-2xl border border-border bg-card p-12 text-center shadow-sm">
+        <div className="mx-auto mb-4 h-10 w-10 animate-spin rounded-full border-4 border-blue-600 border-t-transparent"></div>
+
+        <h2 className="text-xl font-semibold text-foreground">
+          Loading Documents...
+        </h2>
+
+        <p className="mt-2 text-muted-foreground">
+          Please wait while we fetch your documents.
         </p>
       </div>
+    ) : (
+      <div className="space-y-5">
+        {filteredDocuments.length > 0 ? (
+          filteredDocuments.map((doc) => (
+            <DocumentCard
+              key={doc._id}
+              document={doc}
+              onDelete={handleDelete}
+              onRename={handleRename}
+              onAnalyze={handleAnalyze}
+              onShare={handleShare}
+              isAnalyzing={analyzingId === doc._id}
+            />
+          ))
+        ) : (
+          <div className="rounded-2xl border border-border bg-card p-12 text-center shadow-sm">
+            <h2 className="text-2xl font-semibold text-foreground">
+              {searchTerm
+                ? "No Matching Documents"
+                : selectedFolder
+                ? "No Documents In This Folder"
+                : "No Documents Yet"}
+            </h2>
 
-      {/* Search */}
-      <div className="mb-8">
-        <input
-          type="text"
-          placeholder="🔍 Search documents..."
-          value={searchTerm}
-          onChange={(e) =>
-            setSearchTerm(e.target.value)
-          }
-          className="w-full rounded-xl border bg-white px-4 py-3 outline-none transition focus:border-blue-500"
-        />
+            <p className="mt-3 text-muted-foreground">
+              {searchTerm
+                ? "Try searching with a different keyword."
+                : selectedFolder
+                ? "Upload a document to this folder."
+                : "Upload your first document to get started."}
+            </p>
+          </div>
+        )}
       </div>
+    )}
 
-      {/* Loading */}
-      {loading ? (
-        <div className="rounded-2xl border bg-white p-12 text-center">
-          <h2 className="text-xl font-semibold">
-            Loading Documents...
-          </h2>
-        </div>
-      ) : (
-        <div className="space-y-5">
-          {filteredDocuments.length > 0 ? (
-            filteredDocuments.map((doc) => (
-              <DocumentCard
-                key={doc._id}
-                document={doc}
-                onDelete={handleDelete}
-                onRename={handleRename}
-                onAnalyze={handleAnalyze}
-                isAnalyzing={
-                  analyzingId === doc._id
-                }
-              />
-            ))
-          ) : (
-            <div className="rounded-2xl border bg-white p-12 text-center">
-              <h2 className="text-2xl font-semibold">
-                {searchTerm
-                  ? "No Matching Documents"
-                  : "No Documents Yet"}
-              </h2>
-
-              <p className="mt-2 text-gray-500">
-                {searchTerm
-                  ? "Try searching with a different keyword."
-                  : "Upload your first document to get started."}
-              </p>
-            </div>
-          )}
-        </div>
-      )}
-    </DashboardLayout>
-  );
+    <ShareDocumentModal
+      isOpen={shareModalOpen}
+      onClose={() => {
+        setShareModalOpen(false);
+        setSelectedDocument(null);
+      }}
+      document={selectedDocument}
+    />
+  </DashboardLayout>
+);
 }
 
 export default Documents;

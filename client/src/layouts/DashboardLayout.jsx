@@ -3,7 +3,7 @@ import Navbar from "../components/dashboard/Navbar";
 
 function DashboardLayout({ children }) {
   return (
-    <div className="flex min-h-screen bg-slate-100">
+    <div className="flex min-h-screen bg-background transition-colors duration-300">
 
       <Sidebar />
 
@@ -11,7 +11,7 @@ function DashboardLayout({ children }) {
 
         <Navbar />
 
-        <main className="flex-1 p-6">
+        <main className="flex-1 bg-background p-6 transition-colors duration-300">
           {children}
         </main>
 

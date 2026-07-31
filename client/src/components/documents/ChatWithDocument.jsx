@@ -55,16 +55,20 @@ const ChatWithDocument = ({ documentId }) => {
   };
 
   return (
-    <div className="mt-6 rounded-xl border p-4">
-      <h2 className="text-xl font-semibold mb-4">
+    <div className="mt-6 rounded-2xl border border-border bg-card p-6 shadow-sm transition-colors duration-300">
+
+      <h2 className="mb-5 text-2xl font-bold text-foreground">
         💬 Chat with Document
       </h2>
 
-      <div className="h-80 overflow-y-auto border rounded-lg p-3 mb-4 space-y-3">
+      <div className="mb-4 h-96 space-y-4 overflow-y-auto rounded-xl border border-border bg-background p-4">
+
         {messages.length === 0 && (
-          <p className="text-gray-500 text-sm">
-            Ask anything about this document...
-          </p>
+          <div className="flex h-full items-center justify-center">
+            <p className="text-muted-foreground">
+              Hello! How can I help you with the uploaded document?
+            </p>
+          </div>
         )}
 
         {messages.map((msg, index) => (
@@ -77,40 +81,52 @@ const ChatWithDocument = ({ documentId }) => {
             }`}
           >
             <div
-              className={`max-w-[75%] rounded-xl px-4 py-2 ${
+              className={`max-w-[75%] rounded-2xl px-4 py-3 shadow-sm ${
                 msg.sender === "user"
                   ? "bg-blue-600 text-white"
-                  : "bg-gray-100"
+                  : "border border-border bg-muted text-foreground"
               }`}
             >
-              {msg.text}
+              <p className="whitespace-pre-wrap leading-7">
+                {msg.text}
+              </p>
             </div>
           </div>
         ))}
 
         {loading && (
-          <div className="text-sm text-gray-500">
-            AI is thinking...
+          <div className="flex justify-start">
+            <div className="rounded-2xl border border-border bg-muted px-4 py-3 text-muted-foreground">
+              🤖 AI is thinking...
+            </div>
           </div>
         )}
+
       </div>
 
-      <div className="flex gap-2">
+      <div className="flex gap-3">
+
         <input
           type="text"
           placeholder="Ask a question..."
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
-          className="flex-1 border rounded-lg px-4 py-2"
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !loading) {
+              handleSend();
+            }
+          }}
+          className="flex-1 rounded-xl border border-border bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20"
         />
 
         <button
           onClick={handleSend}
           disabled={loading}
-          className="bg-blue-600 text-white px-5 rounded-lg"
+          className="rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
         >
           Send
         </button>
+
       </div>
     </div>
   );
