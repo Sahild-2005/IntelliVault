@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import api from "../../services/api";
 
 const ChatWithDocument = ({ documentId }) => {
   const [question, setQuestion] = useState("");
@@ -21,19 +21,12 @@ const ChatWithDocument = ({ documentId }) => {
     setLoading(true);
 
     try {
-      const token = localStorage.getItem("token");
-
-      const res = await axios.post(
-       `${API_URL}/documents/${documentId}/chat`,
-        {
-          question: userQuestion,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+     const res = await api.post(
+  `/documents/${documentId}/chat`,
+  {
+    question: userQuestion,
+  }
+);
 
       const aiMessage = {
         sender: "ai",
