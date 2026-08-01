@@ -12,10 +12,35 @@ import folderRoutes from "./routes/folderRoutes.js";
 const app = express();
 
 // ================================
-// Middleware
+// CORS Configuration
 // ================================
 
-app.use(cors());
+const allowedOrigins = [
+  "http://localhost:5173",
+  process.env.CLIENT_URL,
+].filter(Boolean);
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // Allow requests with no origin (Postman, Render health checks, etc.)
+      if (!origin) {
+        return callback(null, true);
+      }
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error("Not allowed by CORS"));
+    },
+    credentials: true,
+  })
+);
+
+// ================================
+// Middleware
+// ================================
 
 app.use(express.json());
 
@@ -49,10 +74,6 @@ app.get("/", (req, res) => {
     message: "🚀 IntelliVault Backend Running Successfully",
   });
 });
-
-// ================================
-// 404 Route
-// ================================
 
 // ================================
 // 404 Route
