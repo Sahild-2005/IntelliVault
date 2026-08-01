@@ -22,25 +22,28 @@ function StorageCard({ storage = 0 }) {
   };
 
   return (
-    <div className="rounded-2xl border bg-white p-6 shadow-sm transition-all duration-300 hover:shadow-lg">
+    <div className="rounded-2xl border border-border bg-card p-6 shadow-sm transition-all duration-300 hover:shadow-lg">
+
       {/* Header */}
       <div className="mb-6 flex items-center gap-3">
-        <div className="rounded-xl bg-green-100 p-3">
+
+        <div className="rounded-xl bg-green-100 p-3 dark:bg-green-900/30">
           <HardDrive
-            className="text-green-600"
+            className="text-green-600 dark:text-green-400"
             size={24}
           />
         </div>
 
         <div>
-          <h2 className="text-xl font-bold">
+          <h2 className="text-xl font-bold text-foreground">
             Storage Usage
           </h2>
 
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-muted-foreground">
             {formatStorage(storage)} of 1 GB used
           </p>
         </div>
+
       </div>
 
       {/* Progress */}
@@ -49,7 +52,7 @@ function StorageCard({ storage = 0 }) {
         className="h-3"
       />
 
-      <div className="mt-3 flex justify-between text-sm text-gray-500">
+      <div className="mt-3 flex justify-between text-sm text-muted-foreground">
         <span>Used Space</span>
 
         <span>
@@ -58,27 +61,32 @@ function StorageCard({ storage = 0 }) {
       </div>
 
       {/* Bottom Info */}
-      <div className="mt-6 rounded-xl bg-gray-50 p-4">
+      <div className="mt-6 rounded-xl bg-muted p-4 transition-colors duration-300">
 
         <div className="mb-3 flex items-center justify-between">
-          <span className="text-gray-600">
+
+          <span className="text-muted-foreground">
             Available Storage
           </span>
 
-          <span className="font-semibold">
+          <span className="font-semibold text-foreground">
             {formatStorage(STORAGE_LIMIT - storage)}
           </span>
+
         </div>
 
-        <div className="flex items-center gap-2 text-green-600">
+        <div className="flex items-center gap-2 text-green-600 dark:text-green-400">
+
           <CheckCircle2 size={18} />
 
           <span className="text-sm font-medium">
             Cloud Storage Active
           </span>
+
         </div>
 
       </div>
+
     </div>
   );
 }

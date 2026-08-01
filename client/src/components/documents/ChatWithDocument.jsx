@@ -7,23 +7,26 @@ const ChatWithDocument = ({ documentId }) => {
   const [loading, setLoading] = useState(false);
 
   const handleSend = async () => {
-    if (!question.trim()) return;
+    if (!question.trim() || loading) return;
+
+    const userQuestion = question.trim();
 
     const userMessage = {
       sender: "user",
-      text: question,
+      text: userQuestion,
     };
 
     setMessages((prev) => [...prev, userMessage]);
+    setQuestion("");
     setLoading(true);
 
     try {
       const token = localStorage.getItem("token");
 
       const res = await axios.post(
-        `http://localhost:5000/api/documents/${documentId}/chat`,
+       `${API_URL}/documents/${documentId}/chat`,
         {
-          question,
+          question: userQuestion,
         },
         {
           headers: {
@@ -39,18 +42,21 @@ const ChatWithDocument = ({ documentId }) => {
 
       setMessages((prev) => [...prev, aiMessage]);
     } catch (error) {
-      console.error(error);
+      console.error("Chat Error:", error);
+
+      const errorMessage =
+        error.response?.data?.message ||
+        "Unable to contact the AI assistant. Please try again.";
 
       setMessages((prev) => [
         ...prev,
         {
           sender: "ai",
-          text: "Something went wrong.",
+          text: errorMessage,
         },
       ]);
     } finally {
       setLoading(false);
-      setQuestion("");
     }
   };
 
@@ -65,8 +71,10 @@ const ChatWithDocument = ({ documentId }) => {
 
         {messages.length === 0 && (
           <div className="flex h-full items-center justify-center">
-            <p className="text-muted-foreground">
-              Hello! How can I help you with the uploaded document?
+            <p className="text-center text-muted-foreground">
+              Hello! 👋
+              <br />
+              Ask me anything about this document.
             </p>
           </div>
         )}
@@ -81,13 +89,13 @@ const ChatWithDocument = ({ documentId }) => {
             }`}
           >
             <div
-              className={`max-w-[75%] rounded-2xl px-4 py-3 shadow-sm ${
+              className={`max-w-[80%] rounded-2xl px-4 py-3 shadow-sm ${
                 msg.sender === "user"
                   ? "bg-blue-600 text-white"
                   : "border border-border bg-muted text-foreground"
               }`}
             >
-              <p className="whitespace-pre-wrap leading-7">
+              <p className="whitespace-pre-wrap break-words leading-7">
                 {msg.text}
               </p>
             </div>
@@ -108,7 +116,7 @@ const ChatWithDocument = ({ documentId }) => {
 
         <input
           type="text"
-          placeholder="Ask a question..."
+          placeholder="Ask a question about the document..."
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
           onKeyDown={(e) => {
@@ -116,15 +124,16 @@ const ChatWithDocument = ({ documentId }) => {
               handleSend();
             }
           }}
-          className="flex-1 rounded-xl border border-border bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20"
+          disabled={loading}
+          className="flex-1 rounded-xl border border-border bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 disabled:opacity-60"
         />
 
         <button
           onClick={handleSend}
-          disabled={loading}
+          disabled={loading || !question.trim()}
           className="rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
         >
-          Send
+          {loading ? "Sending..." : "Send"}
         </button>
 
       </div>

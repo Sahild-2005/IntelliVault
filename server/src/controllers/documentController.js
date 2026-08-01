@@ -438,16 +438,45 @@ export const chatDocument = async (req, res) => {
       question
     );
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       answer,
     });
+
   } catch (error) {
     console.error("Chat Error:", error);
 
-    res.status(500).json({
+    // Gemini busy
+    if (error?.status === 503) {
+      return res.status(503).json({
+        success: false,
+        message:
+          "AI service is currently busy. Please try again in a few moments.",
+      });
+    }
+
+    // Too many requests
+    if (error?.status === 429) {
+      return res.status(429).json({
+        success: false,
+        message:
+          "Too many AI requests. Please wait a minute and try again.",
+      });
+    }
+
+    // Timeout
+    if (error?.status === 504) {
+      return res.status(504).json({
+        success: false,
+        message:
+          "The AI took too long to respond. Please try again.",
+      });
+    }
+
+    return res.status(500).json({
       success: false,
-      message: error.message,
+      message:
+        "Unable to process your request right now. Please try again later.",
     });
   }
 };

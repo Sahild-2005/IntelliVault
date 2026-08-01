@@ -4,26 +4,34 @@ import {
   useEffect,
   useState,
 } from "react";
+
 import * as folderService from "../services/folderService";
+import { useAuth } from "./AuthContext";
 
 const FolderContext = createContext();
 
 export const FolderProvider = ({ children }) => {
+  const { user } = useAuth();
+
   const [folders, setFolders] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // NEW
   const [selectedFolder, setSelectedFolder] = useState("");
 
   const fetchFolders = async () => {
+    if (!user) return;
+
     try {
+      setLoading(true);
+
       const res = await folderService.getFolders();
 
       console.log("Folders API Response:", res);
 
       setFolders(res.folders || []);
     } catch (err) {
-      console.log(err);
+      console.error(err);
+
       setFolders([]);
     } finally {
       setLoading(false);
@@ -31,8 +39,14 @@ export const FolderProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    fetchFolders();
-  }, []);
+    if (user) {
+      fetchFolders();
+    } else {
+      setFolders([]);
+      setSelectedFolder("");
+      setLoading(false);
+    }
+  }, [user]);
 
   return (
     <FolderContext.Provider
@@ -41,8 +55,6 @@ export const FolderProvider = ({ children }) => {
         loading,
         fetchFolders,
         setFolders,
-
-        // NEW
         selectedFolder,
         setSelectedFolder,
       }}

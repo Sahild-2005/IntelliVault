@@ -44,7 +44,6 @@ function Navbar() {
           {/* Right Side */}
           <div className="hidden items-center gap-3 md:flex">
 
-            {/* Dark Mode Toggle */}
             <Button
               variant="outline"
               size="icon"
@@ -72,7 +71,7 @@ function Navbar() {
 
           </div>
 
-          {/* Mobile Menu */}
+          {/* Mobile */}
           <div className="flex items-center gap-2 md:hidden">
 
             <Button

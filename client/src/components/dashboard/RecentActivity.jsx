@@ -13,25 +13,31 @@ const iconMap = {
 };
 
 const colorMap = {
-  upload: "bg-blue-100 text-blue-600",
-  ai: "bg-purple-100 text-purple-600",
-  folder: "bg-green-100 text-green-600",
-  delete: "bg-red-100 text-red-600",
+  upload:
+    "bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400",
+  ai:
+    "bg-purple-100 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400",
+  folder:
+    "bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400",
+  delete:
+    "bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400",
 };
 
 function RecentActivity({ activities = [] }) {
   return (
-    <div className="rounded-2xl border bg-white p-6 shadow-sm">
-      <h2 className="mb-6 text-xl font-bold">
+    <div className="rounded-2xl border border-border bg-card p-6 shadow-sm transition-colors duration-300">
+
+      <h2 className="mb-6 text-xl font-bold text-foreground">
         Recent Activity
       </h2>
 
       {activities.length === 0 ? (
-        <div className="py-10 text-center text-gray-500">
+        <div className="py-10 text-center text-muted-foreground">
           No recent activity found.
         </div>
       ) : (
         <div className="space-y-5">
+
           {activities.map((activity) => {
             const Icon = iconMap[activity.type];
 
@@ -47,17 +53,20 @@ function RecentActivity({ activities = [] }) {
                 </div>
 
                 <div className="flex-1">
-                  <h3 className="font-medium text-gray-900">
+
+                  <h3 className="font-medium text-foreground">
                     {activity.title}
                   </h3>
 
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-muted-foreground">
                     {activity.time}
                   </p>
+
                 </div>
               </div>
             );
           })}
+
         </div>
       )}
     </div>
