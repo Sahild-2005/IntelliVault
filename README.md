@@ -1,34 +1,54 @@
-# 🔐 IntelliVault - AI Secure Document Management Platform
+<div align="center">
+
+# 🔐 IntelliVault
+
+### AI-Powered Secure Document Management Platform
+
+Securely upload, organize, analyze, summarize, and chat with your documents using Google Gemini AI.
 
 <p align="center">
 
-![React](https://img.shields.io/badge/React-19-blue?logo=react)
-![Node](https://img.shields.io/badge/Node.js-Express-green?logo=node.js)
-![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green?logo=mongodb)
-![Gemini](https://img.shields.io/badge/Google-Gemini-blue?logo=google)
-![Cloudinary](https://img.shields.io/badge/Cloudinary-Storage-blue)
-![Vercel](https://img.shields.io/badge/Vercel-Deployed-black?logo=vercel)
-![Render](https://img.shields.io/badge/Render-Backend-purple)
+<a href="https://intelli-vault.vercel.app">
+<img src="https://img.shields.io/badge/🚀_Live_Demo-Visit-success?style=for-the-badge"/>
+</a>
+
+<a href="https://github.com/Sahild-2005/IntelliVault">
+<img src="https://img.shields.io/badge/GitHub-Repository-black?style=for-the-badge&logo=github"/>
+</a>
 
 </p>
 
+<p align="center">
+
+![React](https://img.shields.io/badge/React-18-61DAFB?logo=react)
+![Node.js](https://img.shields.io/badge/Node.js-Express-339933?logo=node.js)
+![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?logo=mongodb)
+![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-v4-06B6D4?logo=tailwindcss)
+![Gemini AI](https://img.shields.io/badge/Google-Gemini-8E75FF)
+![Cloudinary](https://img.shields.io/badge/Cloudinary-Storage-3448C5)
+![JWT](https://img.shields.io/badge/Auth-JWT-orange)
+
+</p>
+
+</div>
+
 ---
 
-## 📖 About
+# 📖 Overview
 
-**IntelliVault** is an AI-powered document management platform that allows users to securely upload, organize, analyze, summarize, chat with, and share documents.
+**IntelliVault** is a modern full-stack AI-powered document management platform that enables users to securely upload, organize, summarize, and interact with documents using Google Gemini AI.
 
-The application combines modern cloud technologies with Google's Gemini AI to provide intelligent document understanding while maintaining secure authentication and cloud-based storage.
+The application combines secure authentication, cloud storage, AI-powered document analysis, intelligent PDF chat, folder management, analytics, and document sharing into a single seamless platform.
 
 ---
 
 # 🌐 Live Demo
 
-### 🚀 Frontend
+### Frontend
 
 https://intelli-vault.vercel.app
 
-### ⚙ Backend API
+### Backend API
 
 https://intellivault-api-518m.onrender.com
 
@@ -36,150 +56,18 @@ https://intellivault-api-518m.onrender.com
 
 # ✨ Features
 
-### 🔐 Authentication
-
-- User Registration
-- Secure Login
-- JWT Authentication
-- Protected Routes
-- Persistent Sessions
-
----
-
-### 📄 Document Management
-
-- Upload PDF Documents
-- Upload Images
-- Cloudinary Storage
-- Automatic Metadata Storage
-- Delete Documents
-- View Document Details
-
----
-
-### 🤖 AI Features
-
-- AI Document Summary
-- Automatic Title Generation
-- Document Type Detection
-- Smart Keyword Extraction
-- AI Tag Generation
-- Chat with PDF using Gemini AI
-
----
-
-### 📁 Organization
-
-- Folder Management
-- Create/Delete Folders
-- Move Documents
-- Document Categorization
-
----
-
-### 🔗 Sharing
-
-- Generate Public Share Links
-- View Shared Documents
-- Share Token Support
-
----
-
-### 📊 Dashboard
-
-- Total Documents
-- Storage Usage
-- Upload Statistics
-- AI Analytics
-
----
-
-### 🎨 User Experience
-
-- Responsive Design
-- Dark / Light Theme
-- Modern Dashboard UI
-- Mobile Friendly
-
----
-
-# 🛠 Tech Stack
-
-## Frontend
-
-- React.js
-- React Router DOM
-- Tailwind CSS
-- Axios
-- Lucide Icons
-
----
-
-## Backend
-
-- Node.js
-- Express.js
-- JWT Authentication
-- Multer
-- REST API
-
----
-
-## Database
-
-- MongoDB Atlas
-- Mongoose ODM
-
----
-
-## AI
-
-- Google Gemini API
-
----
-
-## Cloud
-
-- Cloudinary
-
----
-
-## Deployment
-
-- Vercel
-- Render
-
----
-
-# 📂 Project Structure
-
-```text
-IntelliVault
-│
-├── client
-│   ├── src
-│   │
-│   ├── components
-│   ├── pages
-│   ├── services
-│   ├── routes
-│   ├── context
-│   ├── hooks
-│   └── utils
-│
-├── server
-│   ├── config
-│   ├── controllers
-│   ├── middleware
-│   ├── models
-│   ├── routes
-│   ├── services
-│   ├── utils
-│   └── server.js
-│
-├── assets
-├── README.md
-```
+- 🔐 Secure JWT Authentication
+- 📄 Upload PDF Documents
+- ☁️ Cloudinary File Storage
+- 🤖 AI-Powered Document Analysis
+- 📝 Automatic AI Summary
+- 🏷️ AI Keyword Extraction
+- 💬 Chat with PDF using Google Gemini AI
+- 📁 Folder Management
+- 🔗 Public Document Sharing
+- 📊 Analytics Dashboard
+- 🌙 Dark & Light Theme
+- 📱 Fully Responsive Design
 
 ---
 
@@ -191,13 +79,13 @@ IntelliVault
 
 ---
 
-## ✨ Landing Features
+## 🔑 Login Page
 
 ![](assets/landing2.png)
 
 ---
 
-## 📈 Landing Statistics
+## 📝 Register Page
 
 ![](assets/landing3.png)
 
@@ -221,15 +109,15 @@ IntelliVault
 
 ---
 
-## 🤖 AI Chat
+## 🤖 AI Summary
 
-![](assets/chat.png)
+![](assets/summary.png)
 
 ---
 
-## 🧠 AI Summary & Analytics
+## 💬 Chat with AI
 
-![](assets/summary.png)
+![](assets/chat.png)
 
 ---
 
@@ -239,43 +127,135 @@ IntelliVault
 
 ---
 
-## ⚙ Settings
+## ⚙️ Settings
 
 ![](assets/settings.png)
 
 ---
 
-# 🚀 Installation
+# 🛠 Tech Stack
 
-## Clone Repository
+## Frontend
+
+- React.js
+- Tailwind CSS
+- React Router DOM
+- Axios
+- Lucide React
+
+## Backend
+
+- Node.js
+- Express.js
+- JWT Authentication
+- Multer
+
+## Database
+
+- MongoDB Atlas
+
+## Artificial Intelligence
+
+- Google Gemini API
+
+## Cloud Storage
+
+- Cloudinary
+
+## Deployment
+
+- Vercel
+- Render
+
+---
+
+# 📂 Project Structure
+
+```text
+IntelliVault
+│
+├── assets
+│   ├── analytics.png
+│   ├── chat.png
+│   ├── dashboard.png
+│   ├── document-details.png
+│   ├── landing.png
+│   ├── landing2.png
+│   ├── landing3.png
+│   ├── settings.png
+│   ├── summary.png
+│   └── upload.png
+│
+├── client
+│   ├── src
+│   ├── assets
+│   ├── components
+│   ├── context
+│   ├── pages
+│   ├── routes
+│   ├── services
+│   └── App.jsx
+│
+├── server
+│   ├── config
+│   ├── controllers
+│   ├── middleware
+│   ├── models
+│   ├── routes
+│   ├── services
+│   ├── utils
+│   └── server.js
+│
+└── README.md
+```
+
+---
+
+# 🚀 Getting Started
+
+## Clone the Repository
 
 ```bash
 git clone https://github.com/Sahild-2005/IntelliVault.git
-```
-
-```
 cd IntelliVault
 ```
 
 ---
 
-## Backend
+## Install Frontend
 
-```
-cd server
+```bash
+cd client
+
 npm install
+
+npm run dev
 ```
 
-Create a `.env` file:
+---
+
+## Install Backend
+
+```bash
+cd server
+
+npm install
+
+npm run dev
+```
+
+---
+
+# 🔑 Environment Variables
+
+## Backend (`server/.env`)
 
 ```env
-PORT=5000
+PORT=
 
 MONGODB_URI=
 
 JWT_SECRET=
-
-GEMINI_API_KEY=
 
 CLOUDINARY_CLOUD_NAME=
 
@@ -283,117 +263,61 @@ CLOUDINARY_API_KEY=
 
 CLOUDINARY_API_SECRET=
 
-CLIENT_URL=http://localhost:5173
-```
+GEMINI_API_KEY=
 
-Run backend
-
-```bash
-npm run dev
+CLIENT_URL=
 ```
 
 ---
 
-## Frontend
-
-```bash
-cd client
-npm install
-```
-
-Create a `.env`
+## Frontend (`client/.env`)
 
 ```env
-VITE_API_URL=http://localhost:5000/api
-```
-
-Run frontend
-
-```bash
-npm run dev
+VITE_API_URL=
 ```
 
 ---
 
-# 🔄 Application Workflow
+# 📡 Core Modules
 
-```
-User
-
-↓
-
-Login / Register
-
-↓
-
-Upload Document
-
-↓
-
-Cloudinary Storage
-
-↓
-
-MongoDB Metadata
-
-↓
-
-Gemini AI Analysis
-
-↓
-
-Summary
-Keywords
-Title
-Document Type
-
-↓
-
-Dashboard
-
-↓
-
-Chat with PDF
-
-↓
-
-Share Document
-
-↓
-
-Analytics
-```
+- User Authentication
+- User Management
+- Document Upload
+- AI Document Analysis
+- AI Summary Generation
+- AI Chat with PDF
+- Folder Management
+- Analytics Dashboard
+- Secure Public Sharing
 
 ---
 
-# 📌 Future Improvements
+# 🔮 Future Enhancements
 
-- OCR for scanned PDFs
-- AI Document Translation
-- Multi-language Support
-- Document Versioning
+- OCR Support for Scanned Documents
+- AI Semantic Search
 - Team Collaboration
-- Role Based Access
-- Email Notifications
-- AI Generated Flashcards
-- AI Quiz Generation
-- Voice-based Document Chat
+- Document Version History
+- Email Sharing
+- Notifications
+- Mobile Application
+- Role-Based Access Control
 
 ---
 
-# 👨‍💻 Author
+# 👨‍💻 Developer
 
 **Sahil Dhumal**
 
 Computer Engineering Student
 
-Mumbai, India
+📍 Mumbai, India
 
-GitHub
+### GitHub
 
 https://github.com/Sahild-2005
 
-LinkedIn
+### LinkedIn
 
 https://linkedin.com/in/sahil-dhumal-06b961291
 
@@ -401,12 +325,14 @@ https://linkedin.com/in/sahil-dhumal-06b961291
 
 # ⭐ Support
 
-If you found this project useful, consider giving it a **⭐ Star** on GitHub.
+If you found this project useful, please consider giving it a ⭐ on GitHub.
 
-It motivates me to build more open-source projects.
+Your support motivates me to build more high-quality open-source projects.
 
 ---
 
-## 📜 License
+<div align="center">
 
-This project is licensed under the **MIT License**.
+Made with ❤️ using React • Node.js • MongoDB • Google Gemini AI
+
+</div>
